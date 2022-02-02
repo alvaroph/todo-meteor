@@ -1,26 +1,41 @@
 <template>
-  <div>
-    <h1>Welcome to Meteor!</h1>
-    <hello/>
-    <info/>
+  <div className="container">
+    <header>
+      <h1>Todo List</h1>
+    </header>
+    <TaskForm />
+    <ul>
+      <Task
+          v-for="task in tasks"
+          v-bind:key="task._id"
+          v-bind:task="task"
+      />
+    </ul>
   </div>
 </template>
 
 <script>
-import Hello from './components/Hello.vue'
-import Info from './components/Info.vue'
+import Vue from "vue";
+import Task from "./components/Task.vue";
+import TaskForm from "./components/TaskForm.vue";
+import { TasksCollection } from "../api/TasksCollection";
 
 export default {
   components: {
-    Hello,
-    Info,
+    Task,
+    TaskForm
   },
-}
-</script>
+  data() {
+    return {};
+  },
+  methods: {},
+  meteor: {
 
-<style>
-  body {
-    font-family: sans-serif;
-    padding: 10px;
+     tasks() {
+      //CONECTA CON MONGO Y RECUPERA LAS TAREAS ORDENADAS POR FECHA
+      return TasksCollection.find({}, { sort: { createdAt: -1 } }).fetch();
+    }
+   
   }
-</style>
+};
+</script>
