@@ -2,6 +2,9 @@
 
 
  <li v-bind:class="taskClassName">
+    <button class="delete" @click="deleteThisTask">
+    ×
+    </button>
     <input
       type="checkbox"
       readOnly
@@ -10,6 +13,7 @@
   />
   <span class="text">{{ this.task.text }}</span>
 </li>
+
   
 </template>
 
@@ -29,10 +33,14 @@
       methods: {
         toggleChecked() {
           // Set the checked property to the opposite of its current value
+          //AL LLAMAR A ESTA FUNCION ESTAMOS HACIENDO UN UPDATE EN MONGO
           TasksCollection.update(this.task._id, {
             $set: { checked: !this.task.checked }
           });
         },
+        deleteThisTask() {
+          TasksCollection.remove(this.task._id);
+        }
       }
     };
 </script>

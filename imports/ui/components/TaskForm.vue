@@ -1,8 +1,5 @@
 <template>
-<div>
-  <ul>
-    <li>hola</li>
-  </ul>
+
   <form className="new-task" @submit.prevent="handleSubmit">
     <label for="">Inserta la tarea</label>
     <input
@@ -12,7 +9,7 @@
     />
     <button type="submit">Añadir tarea</button>
   </form>
-  </div>
+  
 </template>
 
 <script>
@@ -39,8 +36,3 @@
 }
 </script>
 
-<style scoped>
-li{
-  color:green;
-}
-</style>
