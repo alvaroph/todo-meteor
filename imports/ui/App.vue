@@ -1,16 +1,35 @@
 <template>
-  <div className="container">
+  <div class="app">
     <header>
-      <h1>Todo List</h1>
+      <div className="app-bar">
+        <div className="app-header">
+         <h1>📝️ To Do List
+           <span v-if="incompleteCount > 0">({{incompleteCount}})</span>
+         </h1>
+        </div>
+      </div>
     </header>
-    <TaskForm />
-    <ul>
-      <Task
-          v-for="task in tasks"
-          v-bind:key="task._id"
-          v-bind:task="task"
-      />
-    </ul>
+    <div class="main">
+      <TaskForm />
+
+      <div class="filter">
+          <button              
+              @click="toggleHideCompleted"
+          >
+            <span v-if="hideCompleted">Show All</span>
+            <span v-else>Hide Completed Tasks</span>
+          </button>
+        </div>
+
+      <ul class="tasks">
+        <Task
+            class="task"
+            v-for="task in tasks"
+            v-bind:key="task._id"
+            v-bind:task="task"
+        />
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -26,15 +45,33 @@ export default {
     TaskForm
   },
   data() {
-    return {};
+     return {
+      hideCompleted: false
+    };
   },
-  methods: {},
+  methods: {
+    toggleHideCompleted() {
+      this.hideCompleted = !this.hideCompleted;
+    }
+  },
   meteor: {
 
-     tasks() {
+    tasks() {
       //CONECTA CON MONGO Y RECUPERA LAS TAREAS ORDENADAS POR FECHA
-      return TasksCollection.find({}, { sort: { createdAt: -1 } }).fetch();
-    }
+        let filteredTasks = TasksCollection.find({}, { sort: { createdAt: -1 } }).fetch();
+        
+        //SI QUIERES VER SOLO LAS NO ACABADAS; FILTRA TAREAS
+        if (this.hideCompleted) {
+          filteredTasks = filteredTasks.filter(task => !task.checked);
+        }
+
+        return filteredTasks;
+      }
+      ,
+      incompleteCount() {
+        //SE CONECTA A MONGO Y OBTIENE LA CANTIDAD DE TAREAS SIN ACABAR
+        return TasksCollection.find({ checked: { $ne: true } }).count();
+      }
    
   }
 };

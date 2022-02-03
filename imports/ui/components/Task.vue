@@ -2,9 +2,7 @@
 
 
  <li v-bind:class="taskClassName">
-    <button class="delete" @click="deleteThisTask">
-    ×
-    </button>
+   
     <input
       type="checkbox"
       readOnly
@@ -12,6 +10,9 @@
     @click="toggleChecked"
   />
   <span class="text">{{ this.task.text }}</span>
+   <button class="delete" @click="deleteThisTask">
+    ×
+    </button>
 </li>
 
   
