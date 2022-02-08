@@ -10,6 +10,7 @@
       </div>
     </header>
     <div class="main">
+      <LoginForm />
       <TaskForm />
 
       <div class="filter">
@@ -38,11 +39,13 @@ import Vue from "vue";
 import Task from "./components/Task.vue";
 import TaskForm from "./components/TaskForm.vue";
 import { TasksCollection } from "../api/TasksCollection";
+import LoginForm from "./components/LoginForm.vue";
 
 export default {
   components: {
     Task,
-    TaskForm
+    TaskForm,
+    LoginForm
   },
   data() {
      return {
