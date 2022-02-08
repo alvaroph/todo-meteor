@@ -36,10 +36,12 @@
 
 <script>
 import Vue from "vue";
+
+import LoginForm from "./components/LoginForm.vue";
 import Task from "./components/Task.vue";
 import TaskForm from "./components/TaskForm.vue";
 import { TasksCollection } from "../api/TasksCollection";
-import LoginForm from "./components/LoginForm.vue";
+
 
 export default {
   components: {
